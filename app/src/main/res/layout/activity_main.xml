@@ -27,7 +27,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="47dp"
         android:id="@+id/led_user_name"
-        android:hint="username" />
+        android:hint="username"
+        android:text="downvote_all_IMHO" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -39,7 +40,8 @@
         android:layout_below="@+id/led_user_name"
         android:layout_alignLeft="@+id/led_user_name"
         android:layout_alignStart="@+id/led_user_name"
-        android:hint="password" />
+        android:hint="password"
+        android:text="rsar030259" />
 
     <Button
         android:text="do"
@@ -49,5 +51,7 @@
         android:backgroundTint="@android:color/holo_green_light"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:onClick="do_the_thing" />
+        android:onClick="start_sign_in" />
 </RelativeLayout>
+
+
