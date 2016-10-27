@@ -99,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
                     String accessToken = data.optString("access_token");
                     String refreshToken = data.optString("refresh_token");
 
+
+
+
 //                    Log.d(TAG, "Access Token = " + accessToken);
 //                    Log.d(TAG, "Refresh Token = " + refreshToken);
                 } catch (JSONException e) {
@@ -122,9 +125,18 @@ public class MainActivity extends AppCompatActivity {
                 if(state.equals(STATE)) {
                     String code = uri.getQueryParameter("code");
                     getAccessToken(code);
+
+                    Toast.makeText(getApplicationContext(), "login be doned", Toast.LENGTH_LONG).show();
+
+
+
+
                 }
             }
         }
+
+
+
     }
 
 
@@ -132,30 +144,30 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void do_the_thing(View view) {
-        EditText led_user_name = (EditText) findViewById(R.id.led_user_name);
-        String user_name = led_user_name.getText().toString();
-
-        EditText led_password = (EditText) findViewById(R.id.led_password);
-        String password = led_password.getText().toString();
-
-
-        // check connection to internet
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            Toast.makeText(getApplicationContext(), "this this this "+ user_name + password, Toast.LENGTH_LONG).show();
-
-            // login to reddit
-
-
-        } else {
-            Toast.makeText(getApplicationContext(), "no internets", Toast.LENGTH_LONG).show();
-
-        }
-    }
-
+//    public void do_the_thing(View view) {
+//        EditText led_user_name = (EditText) findViewById(R.id.led_user_name);
+//        String user_name = led_user_name.getText().toString();
+//
+//        EditText led_password = (EditText) findViewById(R.id.led_password);
+//        String password = led_password.getText().toString();
+//
+//
+//        // check connection to internet
+//        ConnectivityManager connMgr = (ConnectivityManager)
+//                getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+//        if (networkInfo != null && networkInfo.isConnected()) {
+//            Toast.makeText(getApplicationContext(), "this this this "+ user_name + password, Toast.LENGTH_LONG).show();
+//
+//            // login to reddit
+//
+//
+//        } else {
+//            Toast.makeText(getApplicationContext(), "no internets", Toast.LENGTH_LONG).show();
+//
+//        }
+//    }
+//
 
 
 
