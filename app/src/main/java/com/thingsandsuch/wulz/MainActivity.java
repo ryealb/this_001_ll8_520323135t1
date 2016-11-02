@@ -1,26 +1,17 @@
 package com.thingsandsuch.wulz;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,44 +21,46 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
+
+    // path variables to connect to internets
+    // not sure - think its random
+    private static final String STATE = "MY_RANDOM_STRING_1";
+    // registerd reddit app id
+    private static final String CLIENT_ID = "_8KdmArtAKAhrA";
+    // fake url that ?intent goes to after ?completed - url set as intent catcher thing in manifest
+    private static final String REDIRECT_URI = "http://www.wulz.com/my_redirect";
+    // location of login token
+    private static final String ACCESS_TOKEN_URL = "https://www.reddit.com/api/v1/access_token";
+    // login page url
     private static final String AUTH_URL =
             "https://www.reddit.com/api/v1/authorize.compact?client_id=%s" +
                     "&response_type=code&state=%s&redirect_uri=%s&" +
                     "duration=permanent&scope=identity";
 
-    private static final String CLIENT_ID = "_8KdmArtAKAhrA";
-
-    private static final String REDIRECT_URI =
-            "http://www.wulz.com/my_redirect";
-
-    private static final String STATE = "MY_RANDOM_STRING_1";
-
-    private static final String ACCESS_TOKEN_URL =
-            "https://www.reddit.com/api/v1/access_token";
 
 
-
-
-
+    // runs on appp start - android running intent?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
     }
+
 
     // build intent and pass out to android to do the thing
     public void start_sign_in(View view){
-
         String url = String.format(AUTH_URL, CLIENT_ID, STATE, REDIRECT_URI);
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
-
     }
 
+
+    // get login token from reddit app thingy
+    // token valid for 1 hr
     private void getAccessToken(String code) {
         OkHttpClient client = new OkHttpClient();
         String authString = CLIENT_ID + ":";
@@ -83,10 +76,12 @@ public class MainActivity extends AppCompatActivity {
                                 "&redirect_uri=" + REDIRECT_URI))
                 .build();
 
+
+        // put internet request in android thread queue
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-//                Log.e(TAG, "ERROR: " + e);
+            //     Log.e(TAG, "ERROR: " + e);
             }
 
             @Override
@@ -98,12 +93,8 @@ public class MainActivity extends AppCompatActivity {
                     data = new JSONObject(json);
                     String accessToken = data.optString("access_token");
                     String refreshToken = data.optString("refresh_token");
-
-
-
-
-//                    Log.d(TAG, "Access Token = " + accessToken);
-//                    Log.d(TAG, "Refresh Token = " + refreshToken);
+                    //  Log.d(TAG, "Access Token = " + accessToken);
+                    //  Log.d(TAG, "Refresh Token = " + refreshToken);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -111,16 +102,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    // pickup on intent passed from android - tell android to run it in manifest
     @Override
     protected void onResume() {
         super.onResume();
 
         if(getIntent()!=null && getIntent().getAction().equals(Intent.ACTION_VIEW)) {
+            // pick up returned data from the intent
             Uri uri = getIntent().getData();
+
+            // check internal data for
             if(uri.getQueryParameter("error") != null) {
                 String error = uri.getQueryParameter("error");
-//                Log.e(TAG, "An error has occurred : " + error);
+                // Log.e(TAG, "An error has occurred : " + error);
             } else {
+                // sucess
                 String state = uri.getQueryParameter("state");
                 if(state.equals(STATE)) {
                     String code = uri.getQueryParameter("code");
@@ -134,13 +131,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-
-
     }
-
-
-
+}
 
 
 
@@ -168,8 +160,3 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 //
-
-
-
-
-}

@@ -10,23 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.thingsandsuch.wulz.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="the thing"
-        android:layout_marginTop="110dp"
-        android:layout_alignTop="@+id/btn_login"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:text="do"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_login"
         android:backgroundTint="@android:color/holo_green_light"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="start_sign_in" />
+        android:onClick="start_sign_in"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
 
 
